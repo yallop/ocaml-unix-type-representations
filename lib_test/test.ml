@@ -9,13 +9,16 @@
 open OUnit2
 
 
+let id x = x
+
+
 (**
  * Test that [file_descr] values are represented as [int]s.
  *)
 let test_file_descr_representation _ =
   assert_equal Obj.int_tag
     Obj.(tag (repr Unix.stdin))
-
+    ~printer:string_of_int
 
 (**
  * Test that [dir_handle] values are represented as abstract values.
@@ -23,7 +26,7 @@ let test_file_descr_representation _ =
 let test_dir_handle_representation _ =
   assert_equal Obj.abstract_tag
     Obj.(tag (repr (Unix.opendir".")))
-
+    ~printer:string_of_int
 
 (**
  * Test converting from a [file_descr] value to an [int] and back.
@@ -35,12 +38,16 @@ let test_file_descr_round_trip _ =
   let buf = Bytes.create 1 in
   begin
     assert_equal 1
-      (Unix.read fd buf 0 1);
-    assert_equal "a" (Bytes.to_string buf);
+      (Unix.read fd buf 0 1)
+      ~printer:string_of_int;
+    assert_equal "a" (Bytes.to_string buf)
+      ~printer:id;
 
     assert_equal 1
-      (Unix.read fd' buf 0 1);
-    assert_equal "b" (Bytes.to_string buf);
+      (Unix.read fd' buf 0 1)
+      ~printer:string_of_int;
+    assert_equal "b" (Bytes.to_string buf)
+      ~printer:id;
   end
 
 
@@ -53,13 +60,16 @@ let test_dir_handle_round_trip _ =
   let dh' = Unix_representations.dir_handle_of_nativeint dh_int in
   begin
     assert_equal ".."
-      (Unix.readdir dh);
+      (Unix.readdir dh)
+      ~printer:id;
 
     assert_equal "a"
-      (Unix.readdir dh');
+      (Unix.readdir dh')
+      ~printer:id;
 
     assert_equal "b"
-      (Unix.readdir dh);
+      (Unix.readdir dh)
+      ~printer:id;
   end
 
 
@@ -76,11 +86,14 @@ let test_use_file_descr_with_ctypes _ =
   let buf = Bytes.create 1 in
   begin
     ignore (ctypes_read fd_int (Ctypes.ocaml_bytes_start buf) Unsigned.Size_t.one);
-    assert_equal "a" (Bytes.to_string buf);
+    assert_equal "a" (Bytes.to_string buf)
+      ~printer:id;
 
     assert_equal 1
-      (Unix.read fd buf 0 1);
-    assert_equal "b" (Bytes.to_string buf);
+      (Unix.read fd buf 0 1)
+      ~printer:string_of_int;
+    assert_equal "b" (Bytes.to_string buf)
+      ~printer:id;
   end
 
 
@@ -101,10 +114,12 @@ let test_use_dir_handle_with_ctypes _ =
   let dh = Unix_representations.dir_handle_of_nativeint raw_ptr in
   begin
     assert_equal ".."
-      (Unix.readdir dh);
+      (Unix.readdir dh)
+      ~printer:id;
 
     assert_equal "a"
-      (Unix.readdir dh);
+      (Unix.readdir dh)
+      ~printer:id;
 
     Unix.closedir dh;
   end;
