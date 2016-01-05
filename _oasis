@@ -1,0 +1,28 @@
+OASISFormat:      0.4
+Name:             unix-type-representations
+Version:          0.1.0
+Synopsis:         Expose the representations of the abstract types in the Unix module
+Authors:          Jeremy Yallop
+License:          MIT
+Plugins:          META (0.3), DevFiles (0.3)
+BuildTools:       ocamlbuild
+
+Library unix_type_representations
+  Path:           lib/
+  Findlibname:    unix-type-representations
+  Modules:        Unix_representations
+  CSources:       unix_type_representation_stubs.c
+  BuildDepends:   unix
+
+Executable test
+  Path:           lib_test/
+  MainIs:         test.ml
+  Build$:         flag(tests)
+  CompiledObject: best
+  Install:        false
+  BuildDepends:   oUnit, ctypes, ctypes.foreign, unix-type-representations
+
+Test test_unix_type_representations
+  Run$:               flag(tests)
+  Command:            $test
+  WorkingDirectory:   lib_test

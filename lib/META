@@ -1,0 +1,13 @@
+# OASIS_START
+# DO NOT EDIT (digest: 77ebd2357584beefbe595cd02c0226ea)
+version = "0.1.0"
+description =
+"Expose the representations of the abstract types in the Unix module"
+requires = "unix"
+archive(byte) = "unix_type_representations.cma"
+archive(byte, plugin) = "unix_type_representations.cma"
+archive(native) = "unix_type_representations.cmxa"
+archive(native, plugin) = "unix_type_representations.cmxs"
+exists_if = "unix_type_representations.cma"
+# OASIS_STOP
+
