@@ -1,5 +1,5 @@
 description = "Functions that expose the underlying types of some abstract types in the Unix module."
-version = "%%VERSION%%"
+version = "97b4624"
 requires = "unix"
 archive(byte) = "unix_type_representations.cma"
 archive(native) = "unix_type_representations.cmxa"

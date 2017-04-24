@@ -2,6 +2,10 @@ true: warn(@5@8@10@11@12@14@23@24@26@29)
 true: principal, bin_annot, safe_string, strict_sequence, debug
 
 "lib": include
+"lib_gen": include
 
 <lib/*>: use_unix_type_representations_stubs
-<lib_test/*>: package(oUnit, ctypes.foreign), use_unix_type_representations_stubs
+<*/*.c>: use_ctypes
+<lib_gen/*>: package(ctypes.stubs)
+<lib_test/*>: package(oUnit, ctypes.stubs)
+<lib_test/*>: use_unix_type_representations_stubs, use_generated_test_stubs

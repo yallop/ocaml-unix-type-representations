@@ -6,6 +6,8 @@
  *)
 
 
+module C = Bindings.Bindings(Generated_ml)
+
 open OUnit2
 
 
@@ -89,14 +91,11 @@ let test_dir_handle_round_trip _ =
  * with {!Ctypes}.
  *)
 let test_use_file_descr_with_ctypes _ =
-  let ctypes_read = Foreign.foreign "read"
-      Ctypes.(int @-> ocaml_bytes @-> PosixTypes.size_t @-> returning PosixTypes.ssize_t)
-  in
   let fd = Unix.(openfile "test-file" [O_RDONLY] 0) in
   let fd_int = Unix_representations.int_of_file_descr fd in
   let buf = Bytes.create 1 in
   begin
-    ignore (ctypes_read fd_int (Ctypes.ocaml_bytes_start buf) Unsigned.Size_t.one);
+    ignore (C.read fd_int (Ctypes.ocaml_bytes_start buf) Unsigned.Size_t.one);
     assert_equal "a" (Bytes.to_string buf)
       ~printer:id;
 
@@ -113,14 +112,8 @@ let test_use_file_descr_with_ctypes _ =
  * with {!Ctypes}.
  *)
 let test_use_dir_handle_with_ctypes _ =
-  let ctypes_opendir = Foreign.foreign "opendir"
-      Ctypes.(string @-> returning (ptr void))
-  in
-  let ctypes_closedir = Foreign.foreign "closedir"
-      Ctypes.(ptr void @-> returning int)
-  in
   (* Open a directory with Ctypes and read it with Unix *)
-  let dir_ptr = ctypes_opendir "test-directory" in
+  let dir_ptr = C.opendir "test-directory" in
   let raw_ptr = Ctypes.raw_address_of_ptr dir_ptr in
   let dh = Unix_representations.dir_handle_of_nativeint raw_ptr in
   let entries = test_directory_contents in
@@ -133,7 +126,7 @@ let test_use_dir_handle_with_ctypes _ =
   let dh = Unix.opendir "test-directory" in
   let raw_ptr = Unix_representations.nativeint_of_dir_handle dh in
   begin
-    ignore (ctypes_closedir (Ctypes.ptr_of_raw_address raw_ptr));
+    ignore (C.closedir (Ctypes.ptr_of_raw_address raw_ptr));
     try
       ignore (Unix.readdir dh);
       assert_failure "readdir after close"
