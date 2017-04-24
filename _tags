@@ -1,33 +1,7 @@
-# OASIS_START
-# DO NOT EDIT (digest: 234814e622d12981f588986e921e21b1)
-# Ignore VCS directories, you can use the same kind of rule outside
-# OASIS_START/STOP if you want to exclude directories that contains
-# useless stuff for the build process
-true: annot, bin_annot
-<**/.svn>: -traverse
-<**/.svn>: not_hygienic
-".bzr": -traverse
-".bzr": not_hygienic
-".hg": -traverse
-".hg": not_hygienic
-".git": -traverse
-".git": not_hygienic
-"_darcs": -traverse
-"_darcs": not_hygienic
-# Library unix_type_representations
-"lib/unix_type_representations.cmxs": use_unix_type_representations
-<lib/unix_type_representations.{cma,cmxa}>: use_libunix_type_representations_stubs
-<lib/*.ml{,i,y}>: pkg_unix
-"lib/unix_type_representation_stubs.c": pkg_unix
-# Executable test
-<lib_test/test.{native,byte}>: pkg_ctypes
-<lib_test/test.{native,byte}>: pkg_ctypes.foreign
-<lib_test/test.{native,byte}>: pkg_oUnit
-<lib_test/test.{native,byte}>: pkg_unix
-<lib_test/test.{native,byte}>: use_unix_type_representations
-<lib_test/*.ml{,i,y}>: pkg_ctypes
-<lib_test/*.ml{,i,y}>: pkg_ctypes.foreign
-<lib_test/*.ml{,i,y}>: pkg_oUnit
-<lib_test/*.ml{,i,y}>: pkg_unix
-<lib_test/*.ml{,i,y}>: use_unix_type_representations
-# OASIS_STOP
+true: warn(@5@8@10@11@12@14@23@24@26@29)
+true: principal, bin_annot, safe_string, strict_sequence, debug
+
+"lib": include
+
+<lib/*>: use_unix_type_representations_stubs
+<lib_test/*>: package(oUnit, ctypes.foreign), use_unix_type_representations_stubs

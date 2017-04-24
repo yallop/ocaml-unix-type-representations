@@ -81,7 +81,7 @@ let test_dir_handle_round_trip _ =
   let entries = assert_remove (Unix.readdir dh) entries in
   let entries = assert_remove (Unix.readdir dh') entries in
   let entries = assert_remove (Unix.readdir dh) entries in
-  ()
+  ignore entries
 
 
 (**
@@ -126,15 +126,16 @@ let test_use_dir_handle_with_ctypes _ =
   let entries = test_directory_contents in
   let entries = assert_remove (Unix.readdir dh) entries in
   let entries = assert_remove (Unix.readdir dh) entries in
+  ignore entries;
   Unix.closedir dh;
 
   (* Open a directory with Unix and close it with Ctypes *)
   let dh = Unix.opendir "test-directory" in
   let raw_ptr = Unix_representations.nativeint_of_dir_handle dh in
   begin
-    ctypes_closedir (Ctypes.ptr_of_raw_address raw_ptr);
+    ignore (ctypes_closedir (Ctypes.ptr_of_raw_address raw_ptr));
     try
-      Unix.readdir dh;
+      ignore (Unix.readdir dh);
       assert_failure "readdir after close"
     with End_of_file | Unix.Unix_error _ ->
       ()
