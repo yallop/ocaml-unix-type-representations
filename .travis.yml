@@ -12,3 +12,6 @@ env:
 os:
   - linux
   - osx
+branches:
+  only: 
+    - master
