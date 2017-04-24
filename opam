@@ -17,6 +17,5 @@ depends: [
   "ocamlbuild" {build}
   "base-unix"
   "ctypes" {test}
-  "ctypes-foreign" {test}
   "ounit" {test}
 ]
