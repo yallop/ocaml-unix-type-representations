@@ -5,6 +5,7 @@ true: principal, bin_annot, safe_string, strict_sequence, debug
 "lib_gen": include
 
 <lib/*>: use_unix_type_representations_stubs
+<lib/unix_representations.ml{,i}>: use_unix
 <*/*.c>: use_ctypes
 <lib_gen/*>: package(ctypes.stubs)
 <lib_test/*>: package(oUnit, ctypes.stubs)
