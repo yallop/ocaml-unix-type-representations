@@ -1,3 +1,8 @@
+unreleased
+------------------
+
+* Switch from topkg to Dune and use Dune 3 features for ctypes
+
 0.1.2 (2022-04-16)
 ------------------
 * Add build dependency on the Unix library
