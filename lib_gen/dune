@@ -1,0 +1,9 @@
+(library
+ (name bindings)
+ (modules bindings)
+ (libraries ctypes))
+
+(executable
+ (name gen_bindings)
+ (libraries bindings ctypes ctypes.stubs)
+ (modules gen_bindings))

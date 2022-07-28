@@ -1,6 +1,7 @@
 unreleased
 ------------------
 * Fix OCaml 5.0 compatibility
+* Switch from topkg to Dune and use Dune 3 features for ctypes
 
 0.1.2 (2022-04-16)
 ------------------

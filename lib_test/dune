@@ -1,0 +1,16 @@
+(rule
+ (targets generated_stubs.c generated_ml.ml)
+ (deps %{project_root}/lib_gen/gen_bindings.exe)
+ (action
+  (chdir
+   %{project_root}
+   (run ./lib_gen/gen_bindings.exe))))
+
+(test
+ (name test)
+ (deps test-file test-directory/a test-directory/b)
+ (libraries bindings unix_representations ounit2 ctypes)
+ (foreign_stubs
+  (language c)
+  (names generated_stubs)
+  (flags :standard)))
