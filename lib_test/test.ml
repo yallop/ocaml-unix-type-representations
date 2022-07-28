@@ -18,7 +18,7 @@ module StringSet = Set.Make(String)
 
 (** The contents of test-directory/ as a set *)
 let test_directory_contents =
-  Array.fold_right StringSet.add 
+  Array.fold_right StringSet.add
     (Sys.readdir "test-directory")
     (StringSet.(union (singleton "..") (singleton ".")))
 

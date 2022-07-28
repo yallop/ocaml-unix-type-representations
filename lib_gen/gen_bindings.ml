@@ -5,8 +5,6 @@
  * See the file LICENSE for details.
  *)
 
-open Ctypes
-
 let () =
   let prefix = "utr_" in
   let stubs_oc = open_out "lib_test/generated_stubs.c" in

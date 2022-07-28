@@ -1,4 +1,4 @@
-module Bindings (F: Cstubs.FOREIGN) =
+module Bindings (F: Ctypes.FOREIGN) =
 struct
   open Ctypes
   open F
