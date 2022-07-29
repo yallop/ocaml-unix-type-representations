@@ -30,3 +30,6 @@ build: [
   ]
 ]
 dev-repo: "git+https://github.com/yallop/ocaml-unix-type-representations.git"
+available: [
+  os != "windows"
+]
