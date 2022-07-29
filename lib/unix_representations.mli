@@ -11,6 +11,10 @@ val nativeint_of_dir_handle : Unix.dir_handle -> nativeint
 val dir_handle_of_nativeint : nativeint -> Unix.dir_handle
 (** Build a {!Unix.dir_handle} value from a [DIR] pointer. *)
 
+val dir_handle_clean : Unix.dir_handle -> unit
+(** After closing a directory, clean its internal OCaml
+    representation. *)
+
 val int_of_file_descr : Unix.file_descr -> int
 (** Convert a {!Unix.file_descr} to an [int]. *)
 

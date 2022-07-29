@@ -126,7 +126,10 @@ let test_use_dir_handle_with_ctypes _ =
   let dh = Unix.opendir "test-directory" in
   let raw_ptr = Unix_representations.nativeint_of_dir_handle dh in
   begin
-    ignore (C.closedir (Ctypes.ptr_of_raw_address raw_ptr));
+    assert_equal 0 (C.closedir (Ctypes.ptr_of_raw_address raw_ptr))
+      ~printer:string_of_int;
+    (* Clean the OCaml value *)
+    Unix_representations.dir_handle_clean dh;
     try
       ignore (Unix.readdir dh);
       assert_failure "readdir after close"

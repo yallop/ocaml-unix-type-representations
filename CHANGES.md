@@ -1,6 +1,7 @@
 unreleased
 ------------------
 
+* Add `dir_handle_clean` to clean the OCaml DIR value after a `closedir`
 * Switch from topkg to Dune and use Dune 3 features for ctypes
 
 0.1.2 (2022-04-16)
