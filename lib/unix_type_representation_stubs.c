@@ -29,3 +29,10 @@ value dir_handle_of_nativeint_stub(value nativeint)
   DIR_Val(res) = d;
   return res;
 }
+
+void dir_handle_clean_stub(value dir_handle)
+{
+  CAMLparam1(dir_handle);
+  DIR_Val(dir_handle) = (DIR *) NULL;
+  CAMLreturn0;
+}
