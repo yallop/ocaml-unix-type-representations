@@ -1,4 +1,4 @@
-module Bindings (F: Ctypes.FOREIGN) =
+module Functions (F: Ctypes.FOREIGN) =
 struct
   open Ctypes
   open F
