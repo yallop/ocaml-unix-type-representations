@@ -1,0 +1,9 @@
+(library
+ (name unix_representations)
+ (public_name unix-type-representations)
+ (libraries unix)
+ (foreign_stubs
+  (language c)
+  (names unix_type_representation_stubs)
+  (flags :standard))
+ (c_library_flags :standard))

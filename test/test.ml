@@ -5,9 +5,6 @@
  * See the file LICENSE for details.
  *)
 
-
-module C = Bindings.Bindings(Generated_ml)
-
 open OUnit2
 
 
@@ -18,7 +15,7 @@ module StringSet = Set.Make(String)
 
 (** The contents of test-directory/ as a set *)
 let test_directory_contents =
-  Array.fold_right StringSet.add 
+  Array.fold_right StringSet.add
     (Sys.readdir "test-directory")
     (StringSet.(union (singleton "..") (singleton ".")))
 
@@ -95,7 +92,7 @@ let test_use_file_descr_with_ctypes _ =
   let fd_int = Unix_representations.int_of_file_descr fd in
   let buf = Bytes.create 1 in
   begin
-    ignore (C.read fd_int (Ctypes.ocaml_bytes_start buf) Unsigned.Size_t.one);
+    ignore (Bindings.C.Function.read fd_int (Ctypes.ocaml_bytes_start buf) Unsigned.Size_t.one);
     assert_equal "a" (Bytes.to_string buf)
       ~printer:id;
 
@@ -113,7 +110,7 @@ let test_use_file_descr_with_ctypes _ =
  *)
 let test_use_dir_handle_with_ctypes _ =
   (* Open a directory with Ctypes and read it with Unix *)
-  let dir_ptr = C.opendir "test-directory" in
+  let dir_ptr = Bindings.C.Function.opendir "test-directory" in
   let raw_ptr = Ctypes.raw_address_of_ptr dir_ptr in
   let dh = Unix_representations.dir_handle_of_nativeint raw_ptr in
   let entries = test_directory_contents in
@@ -126,7 +123,10 @@ let test_use_dir_handle_with_ctypes _ =
   let dh = Unix.opendir "test-directory" in
   let raw_ptr = Unix_representations.nativeint_of_dir_handle dh in
   begin
-    ignore (C.closedir (Ctypes.ptr_of_raw_address raw_ptr));
+    assert_equal 0 (Bindings.C.Function.closedir (Ctypes.ptr_of_raw_address raw_ptr))
+      ~printer:string_of_int;
+    (* Clean the OCaml value *)
+    Unix_representations.dir_handle_clean dh;
     try
       ignore (Unix.readdir dh);
       assert_failure "readdir after close"

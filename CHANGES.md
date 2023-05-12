@@ -1,6 +1,12 @@
+unreleased
+------------------
+* Fix OCaml 5.0 compatibility
+* Switch from topkg to Dune and use Dune 3 features for ctypes
+* Add `dir_handle_clean` to clean the OCaml DIR value after a `closedir`
+
 0.1.2 (2022-04-16)
 ------------------
-* Add build dependency on the Unix library  
+* Add build dependency on the Unix library
   https://github.com/yallop/ocaml-unix-type-representations/pull/6
 
 0.1.1 (2017-04-24)

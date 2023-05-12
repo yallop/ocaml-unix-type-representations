@@ -1,0 +1,4 @@
+(test
+ (name test)
+ (deps test-file test-directory/a test-directory/b)
+ (libraries bindings unix_representations ounit2 ctypes))
